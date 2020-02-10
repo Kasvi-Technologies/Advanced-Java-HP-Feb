@@ -63,7 +63,132 @@ Enums are used to create constansts and mainly used in validations like If state
 2. Display all Directions values in test program
 	
 	
+							Junit
+
+
+1. Write a test method to assert based on the count of employees (fetchEmployees method of EmployeeService is actual)
+
+@BeforeClass
+@AfterClass
+@Before
+@After
+@Test
+JUnitCore.runClassess
+
+assertArrayEquals()
+assertEquals()
+assertTrue() + assertFalse()
+assertNull() + assertNotNull()
+assertSame() + assertNotSame()
 	
+
+@RunWith(Suite.class)
+
+@Suite.SuiteClasses({ 
+   MyUnitTest.class ,TestJunit.class
+})
+
+
+										Annotations
+
+Annotations will specify meta data. It will not chnage your code
+
+@Override - It will specify that method is overridden from parent class
+@Deprecated -
+@SupressWarnings
+
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.METHOD, ElementType.FIELD, ElementType.TYPE})
+@interface MyAnnotation {
+
+	String name() default "sample";
+	String value();
+	int age() default 10;
+	
+	String[] colors();
+	
+}
+
+Repeatable Annotations
+
+@Schedule(dayOfTheWeek="Mon")
+@Schedule(dayOfTheMonth="5")
+Public void sendmessages(){
+
+}
+
+
+
+
+@Role(type="Administrator")
+@Role(type="HR")
+public void deleteEntries(){
+
+
+}
+
+						Maven
+						
+It will build our application automatically
+
+Download Apache maven zip 
+configure <maven-location>\bin to path environment variable
+restart your IDE
+
+from command prompt -. type mvn and enter -> it should not say that mvn command not found
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+									
+
+
+
+
+ Result result = JUnitCore.runClasses(TestJunit.class);
+
+ 
+ 
+ @Retention(RetentionPolicy.RUNTIME)
+ @Target({ElementType.METHOD})
+ 
+ 
 	
 	
 	
