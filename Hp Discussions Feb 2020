@@ -16,6 +16,8 @@ generics force type safety in java language
 
 Generics add stability to your code by making more of your bugs detectable at compile time.”
 
+https://github.com/Kasvi-Technologies/Advanced-Java-HP-Feb
+
 		Excercise 2 - With Employee Class as generics
 
 
@@ -38,8 +40,44 @@ overide toString method
 	}
 
 
-3. Create EmployeeTest classwith main methods
+3. Create EmployeeTest class with main method
 
 	Fetch the Employee list and display the Employee object 
 
+					Excercise 3 with Maps
+					
+
+
+							
+
+Enums are used to create constansts and mainly used in validations like If statement/ switch statements
+
+							Enum Excercise
+
+
+1. create a Enum class called Direction
+
+		a. define NORT, EAST, SOUTH WEST
+		b. provide default values along with constructor and variable and getter methods
+
+2. Display all Directions values in test program
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
