@@ -192,7 +192,159 @@ default and static methods
 	SysOUt(c.getCost());
 	v.drive();
 	
+
+Note: Uploaded the code in Github
+
 							Functional Interfaces
+
+//Lamda expression =  	Functional interfaces + Anonymous inner classes
+
+
+Method References
+	
+		With Object Method
+		Class Static Method
+		Class COnstructor
+
+
+
+
+
+
+
+
+
+
+Stream represents a sequence of objects from a source, which supports aggregate operations. 
+streams are wrappers around a data source, allowing us to operate with that data source and making bulk processing convenient
+
+
+
+										Excercise on Streams
+										
+
+1. Create a String List of around 10 values and should have some empty strings
+2. Filter the Strings which is not empty and display using streams., filter and forEach. 
+Hint: filter(s -> !s.isEmpty())
+3. Convert the non empty strings into List
+4. Display the count of empty Strings
+5. Merge the non empty Strings using delimeter "," 
+Hine: Collectors.joining(", ")
+
+6. count the strings whose length is only 3
+Hine: .filter(s -> s.length() == 3)
+
+7. create an integer array and find out distinct all elements 
+HInt: .distinct()
+
+8. count of all distinct numbers in interger array
+
+9. Square the integer elements and display the final values
+Hint: .map( i -> i*i)
+
+10. create an integer array which contains values from 1 to 100. 
+	a. create a stream and filter out more than 90 and display the values
+	b. create a parallelStream() and filter out more than 90 and display the values. 
+	
+	Note: Observe the result for both display. parallelStream() performs the business logic parallelly
+
+
+
+
+
+stream() − Returns a sequential stream considering collection as its source.
+parallelStream() − Returns a parallel Stream considering collection as its source.
+
+
+List<String> filtered = strings.stream().filter(string -> !string.isEmpty()).collect(Collectors.toList());
+
+forEach
+map
+colect
+
+filter
+findFirst
+
+toArray
+Employee[] employees = empList.stream().toArray(Employee[]::new);
+
+
+The ‘map’ method is used to map each element to its corresponding result. 
+map() produces a new stream after applying a function to each element of the original stream. 
+
+Integer[] empIds = { 1, 2, 3 };
+    
+    List<Employee> employees = Stream.of(empIds)
+      .map(employeeRepository::findById)
+      .collect(Collectors.toList());
+	  
+	  
+	  List<Employee> employees = Stream.of(empIds)
+      .map(employeeRepository::findById)
+      .filter(e -> e != null)
+      .filter(e -> e.getSalary() > 200000)
+      .collect(Collectors.toList());
+	  
+	  
+List<Integer> squaresList = numbers.stream().map( i -> i*i).distinct().collect(Collectors.toList())
+
+int count = strings.stream().filter(string -> string.isEmpty()).count();
+
+.limit(10).forEach(System.out::println);
+Collectors
+Collectors are used to combine the result of processing on the elements of a stream. Collectors can be used to return a list or a string.
+
+String mergedString = strings.stream().filter(string -> !string.isEmpty()).collect(Collectors.joining(", "));
+
+
+Statistics
+With Java 8, statistics collectors are introduced to calculate all statistics when stream processing is being done.
+List numbers = Arrays.asList(3, 2, 2, 3, 7, 3, 5);
+
+IntSummaryStatistics stats = numbers.stream().mapToInt((x) -> x).summaryStatistics();
+
+System.out.println("Highest number in List : " + stats.getMax());
+System.out.println("Lowest number in List : " + stats.getMin());
+System.out.println("Sum of all numbers : " + stats.getSum());
+System.out.println("Average of all numbers : " + stats.getAverage());
+
+ count = strings.stream().filter(string->string.isEmpty()).count();
+ count = strings.stream().filter(string -> string.length() == 3).count();
+ filtered = strings.stream().filter(string ->!string.isEmpty()).collect(Collectors.toList());
+ mergedString = strings.stream().filter(string ->!string.isEmpty()).collect(Collectors.joining(", "));
+ squaresList = numbers.stream().map( i ->i*i).distinct().collect(Collectors.toList());
+  IntSummaryStatistics stats = integers.stream().mapToInt((x) ->x).summaryStatistics();
+  
+  count = strings.parallelStream().filter(string -> string.isEmpty()).count();
+
+
+
+forEach() earlier in this section, which is a terminal operation. However, 
+sometimes we need to perform multiple operations on each element of the stream before any terminal operation is applied.
+
+peek() is an intermediate operation
+
+List<Employee> empList = Arrays.asList(arrayOfEmps);
+    
+    empList.stream()
+      .peek(e -> e.salaryIncrement(10.0))
+      .peek(System.out::println)
+      .collect(Collectors.toList());
+
+
+
+Infinite Loop
+
+Stream<Integer> infiniteStream = Stream.iterate(2, i -> i * 2);
+
+    List<Integer> collect = infiniteStream
+      .skip(3)
+      .limit(5)
+      .collect(Collectors.toList());
+
+
+
+
 
 
 
