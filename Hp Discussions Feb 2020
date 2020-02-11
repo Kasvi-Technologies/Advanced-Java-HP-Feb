@@ -220,35 +220,43 @@ streams are wrappers around a data source, allowing us to operate with that data
 
 
 
-										Excercise on Streams
-										
+										Excercise on Streams										
 
 1. Create a String List of around 10 values and should have some empty strings
-2. Filter the Strings which is not empty and display using streams., filter and forEach. 
-Hint: filter(s -> !s.isEmpty())
+
+2. Filter the Strings which is not empty and display -> using streams., filter and forEach. 
+strLst.stream().filter(s -> !s.isEmpty()).forEach(System.out::println);
+
 3. Convert the non empty strings into List
+strLst.stream().filter(s -> !s.isEmpty()).collect(Collectors.toList());
+
 4. Display the count of empty Strings
+strLst.stream().filter(s -> s.isEmpty()).count();
+
 5. Merge the non empty Strings using delimeter "," 
-Hine: Collectors.joining(", ")
+String mergedString = strLst.stream().filter(s -> !s.isEmpty()).collect(Collectors.joining(", "));
 
 6. count the strings whose length is only 3
-Hine: .filter(s -> s.length() == 3)
+strLst..stream().filter(s -> s.length() == 3).count();
 
-7. create an integer array and find out distinct all elements 
-HInt: .distinct()
+7. create an integer List and find out distinct  elements and display
+intLst.stream().distinct().forEach(System.out::println);
 
-8. count of all distinct numbers in interger array
+8. count of all distinct element in interger array
+intLst.stream().distinct().count();
 
-9. Square the integer elements and display the final values
-Hint: .map( i -> i*i)
+9. Square the integer elements and display the final values (Map is used to collect the elements )
+intLst.stream().map( i -> i*i).forEach(System.out::println);
 
-10. create an integer array which contains values from 1 to 100. 
-	a. create a stream and filter out more than 90 and display the values
-	b. create a parallelStream() and filter out more than 90 and display the values. 
+10. create an integer List which contains values from 1 to 100. 
+	a. create a stream and filter the values which are more than 90 and display the values
+					intLst.stream().filter(i -> i >90).forEach(System.out::println);
+	b. create a parallelStream() and filter the values which are more than 90 and display the values. 
+					intLst.parallelStream().filter(i -> i >90).forEach(System.out::println);
+	Note: Observe the result for both streams display. parallelStream() performs the business logic parallelly 
+	and so you cant predict the order
+
 	
-	Note: Observe the result for both display. parallelStream() performs the business logic parallelly
-
-
 
 
 
