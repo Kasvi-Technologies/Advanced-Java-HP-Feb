@@ -137,6 +137,95 @@ restart your IDE
 
 from command prompt -. type mvn and enter -> it should not say that mvn command not found
 
+						Excercises Based on Day 1
+
+Attendence sheet - https://github.com/Kasvi-Technologies/Advanced-Java-HP-Feb
+
+Generics- Excercise
+
+1. Write a generic class which can accepts any type along with varibale setter and getter methods
+
+2. Write a simple generics class example with two type parameters.
+
+3. Let's say you have an integer array and a string array. You have to write a single method printArray 
+that can print all the elements of both arrays. 
+
+Enum - Excercise
+
+1. create a Enum Season with WINTER, SPRING, SUMMER, FALL 
+
+Provide default values along with constructor, variable and getter method
+
+write a test program to print all Season's 
+
+
+Annotations - Excercise
+
+1. Create a Repeating Annotation called Role with variable value
+Provide Repeating annotation only to method
+Write a test program to fetch all repeating annotations using reflections
+getAnnotationsByType
+
+									Day 2 
+
+default and static methods
+
+1. Create a interface Vehicle 
+	a. with default getCost method 
+
+	default int getCost (){
+
+	}
+	
+	b. drive method as an abstract 
+	
+	abstract void drive();
+	
+
+2. Create a child class called car
+
+	a. Overide the drive method ( and cost method if you want)
+
+3. Write a test program to create an instance of Car object and print cost and call drive emthod
+
+	Vehicle v = new Car();
+	SysOUt(c.getCost());
+	v.drive();
+	
+							Functional Interfaces
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
