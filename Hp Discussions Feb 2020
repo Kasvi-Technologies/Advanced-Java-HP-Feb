@@ -222,6 +222,11 @@ streams are wrappers around a data source, allowing us to operate with that data
 
 										Excercise on Streams										
 
+
+stream() − Returns a sequential stream considering collection as its source.
+parallelStream() − Returns a parallel Stream considering collection as its source.
+
+
 1. Create a String List of around 10 values and should have some empty strings
 
 2. Filter the Strings which is not empty and display -> using streams., filter and forEach. 
@@ -256,202 +261,326 @@ intLst.stream().map( i -> i*i).forEach(System.out::println);
 	Note: Observe the result for both streams display. parallelStream() performs the business logic parallelly 
 	and so you cant predict the order
 
+
+							Day 3
+							
+Excercise
+
+1. Create a Device Class with id , name , model, type, price (along with parameterized constructor)
+
+name can be HP/Lenovo/Dell/Samsung e.t.c
+model can be any model id's 
+type can be TV/Laptop/Mobile
+
+2. create a Test Program 
+
+	a. create a deviceLst with couple of Devices (like., laptop/TV e.t.c) make it atleast 10 devices
+	
+	b. Get the List of Devices whose type will be Laptop and name will be HP 
+	
+	c. Get all Distinct Types of Devices in List. Final Types List should be in Capital Letters
+	
+	d. Get the List of Devices whose type will be mobile and price is less than 10000
+
+
+
+1. How many ways you can Obtain the Stream
+
+	a. Obtain a Stream from existing array
+	
+	Stream.of(arrayOfEmps);
+	
+	b. Obtain a Stream from existing List
+	
+	c. create a stream from individual objects using Stream.of(arrayOfEmps[0], arrayOfEmps[1], arrayOfEmps[2])
+	
+	d. Using Stream Builder
+	
+		Stream.Builder<Employee> empStreamBuilder = Stream.builder();
+
+			empStreamBuilder.accept(arrayOfEmps[0]);
+			empStreamBuilder.accept(arrayOfEmps[1]);
+			empStreamBuilder.accept(arrayOfEmps[2]);
+
+			Stream<Employee> empStream = empStreamBuilder.build();
 	
 
+2. Statistics Collectors - statistics collectors are introduced to calculate all statistics when stream processing is being done.
 
-
-stream() − Returns a sequential stream considering collection as its source.
-parallelStream() − Returns a parallel Stream considering collection as its source.
-
-
-List<String> filtered = strings.stream().filter(string -> !string.isEmpty()).collect(Collectors.toList());
-
-forEach
-map
-colect
-
-filter
-findFirst
-
-toArray
-Employee[] employees = empList.stream().toArray(Employee[]::new);
-
-
-The ‘map’ method is used to map each element to its corresponding result. 
-map() produces a new stream after applying a function to each element of the original stream. 
-
-Integer[] empIds = { 1, 2, 3 };
-    
-    List<Employee> employees = Stream.of(empIds)
-      .map(employeeRepository::findById)
-      .collect(Collectors.toList());
-	  
-	  
-	  List<Employee> employees = Stream.of(empIds)
-      .map(employeeRepository::findById)
-      .filter(e -> e != null)
-      .filter(e -> e.getSalary() > 200000)
-      .collect(Collectors.toList());
-	  
-	  
-List<Integer> squaresList = numbers.stream().map( i -> i*i).distinct().collect(Collectors.toList())
-
-int count = strings.stream().filter(string -> string.isEmpty()).count();
-
-.limit(10).forEach(System.out::println);
-Collectors
-Collectors are used to combine the result of processing on the elements of a stream. Collectors can be used to return a list or a string.
-
-String mergedString = strings.stream().filter(string -> !string.isEmpty()).collect(Collectors.joining(", "));
-
-
-Statistics
-With Java 8, statistics collectors are introduced to calculate all statistics when stream processing is being done.
-List numbers = Arrays.asList(3, 2, 2, 3, 7, 3, 5);
-
-IntSummaryStatistics stats = numbers.stream().mapToInt((x) -> x).summaryStatistics();
+	For Ex: 
+		IntSummaryStatistics stats = numbers.stream().mapToInt((x) -> x).summaryStatistics();
+		
+		IntSummaryStatistics stats5 = Stream.of(numbers).collect(Collectors.summarizingInt(i -> i));
+		
+		
+		mapToDouble and mapToLong
 
 System.out.println("Highest number in List : " + stats.getMax());
 System.out.println("Lowest number in List : " + stats.getMin());
 System.out.println("Sum of all numbers : " + stats.getSum());
 System.out.println("Average of all numbers : " + stats.getAverage());
 
- count = strings.stream().filter(string->string.isEmpty()).count();
- count = strings.stream().filter(string -> string.length() == 3).count();
- filtered = strings.stream().filter(string ->!string.isEmpty()).collect(Collectors.toList());
- mergedString = strings.stream().filter(string ->!string.isEmpty()).collect(Collectors.joining(", "));
- squaresList = numbers.stream().map( i ->i*i).distinct().collect(Collectors.toList());
-  IntSummaryStatistics stats = integers.stream().mapToInt((x) ->x).summaryStatistics();
-  
-  count = strings.parallelStream().filter(string -> string.isEmpty()).count();
+3. Using Collectors 
 
+	IntSummaryStatistics stats3 = 
+					empList.stream().collect(Collectors.summarizingInt(Employee::getId));
+					
+	summarizingDouble
+	summrizingLong
 
+4. peek
+We saw forEach() earlier in this section, which is a terminal operation. However, sometimes we need to perform multiple operations on each 
+element of the stream before any terminal operation is applied.
 
-forEach() earlier in this section, which is a terminal operation. However, 
-sometimes we need to perform multiple operations on each element of the stream before any terminal operation is applied.
-
-peek() is an intermediate operation
-
-List<Employee> empList = Arrays.asList(arrayOfEmps);
-    
-    empList.stream()
+empList.stream()
+      .forEach(e -> e.salaryIncrement(10.0))
+      
+	  
+empList.stream()
       .peek(e -> e.salaryIncrement(10.0))
       .peek(System.out::println)
       .collect(Collectors.toList());
+	  
+5. generate and iterate methods 					
 
+Stream.generate()
+		
+		Stream<String> streamGenerated =  Stream.generate(() -> "element").limit(10);
+		The code above creates a sequence of ten strings with the value – “element”. As the resulting stream is infinite, developer should specify the desired size 
+		or the generate() method will work until it reaches the memory limit:
+		
+		Stream.generate(Math::random)
+				.limit(5)
+				.forEach(System.out::println);
+	  
+	  iterate() takes two parameters: an initial value, called seed element and a function which generates next element using the previous value.
+	  
+	  
+		Stream<Integer> streamIterated = Stream.iterate(40, n -> n + 2).limit(20);
+		
+		Stream<Integer> infiniteStream = Stream.iterate(2, i -> i * 2);
 
+		List<Integer> collect = infiniteStream
+						.skip(3)
+						.limit(5)
+						.collect(Collectors.toList());
 
-Infinite Loop
+6. sorted() operation
 
-Stream<Integer> infiniteStream = Stream.iterate(2, i -> i * 2);
-
-    List<Integer> collect = infiniteStream
-      .skip(3)
-      .limit(5)
+List<Employee> employees = empList.stream()
+      .sorted((e1, e2) -> e1.getName().compareTo(e2.getName()))
       .collect(Collectors.toList());
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-									
-
-
-
-
- Result result = JUnitCore.runClasses(TestJunit.class);
-
+7. min and max using streams
+
+Employee firstEmp = empList.stream()
+      .min((e1, e2) -> e1.getId() - e2.getId())
+      .orElseThrow(NoSuchElementException::new);
+
+8. allMatch, anyMatch, and noneMatch
+These operations all take a predicate and return a boolean. 
+
+List<Integer> intList = Arrays.asList(2, 4, 5, 6, 8);
+    
+    boolean allEven = intList.stream().allMatch(i -> i % 2 == 0);
+    boolean oneEven = intList.stream().anyMatch(i -> i % 2 == 0);
+    boolean noneMultipleOfThree = intList.stream().noneMatch(i -> i % 3 == 0);	  
+	
+	boolean areAllMale = listPersons.stream()
+                .allMatch(p -> p.getGender().equals(Gender.MALE));
+	boolean useGMail = listPersons.stream()
+                .allMatch(p -> p.getEmail().endsWith("gmail.com"));
+				
+	boolean anyFemale = listPersons.stream()
+            .anyMatch(p -> p.getGender().equals(Gender.FEMALE));
+	boolean anyTeenager = listPersons.stream()
+            .anyMatch(p -> p.getAge() < 20);
+			
+			
+9. Stream Specializations : From what we discussed so far, Stream is a stream of object references. 
+However, there are also the IntStream, LongStream, and DoubleStream – which are primitive specializations for int, long and double respectively. 
+These are quite convenient when dealing with a lot of numerical primitives.
+
+The most common way of creating an IntStream is to call mapToInt() on an existing stream:
+	
+	 Integer latestEmpId = empList.stream()
+      .mapToInt(Employee::getId)
+      .max()
+      .orElseThrow(NoSuchElementException::new);
+	  
+	IntStream.of(1, 2, 3);
+	IntStream.range(10, 20);
+	
+	Stream.of(1, 2, 3) ->  This returns a Stream<Integer> and not IntStream.
+	Similarly, using map() instead of mapToInt() returns a Stream<Integer> and not an IntStream.:
+	empList.stream().map(Employee::getId);
+
+10. For example sum(), average(), range() etc:
+
+Double avgSal = empList.stream()
+      .mapToDouble(Employee::getSalary)
+      .average()
+      .orElseThrow(NoSuchElementException::new);
+
+11. Reduction Operations
+A reduction operation (also called as fold) takes a sequence of input elements and combines them into a single summary 
+result by repeated application of a combining operation. We already saw few reduction operations like findFirst(), min() and max().
+
+Double sumSal = empList.stream()
+      .map(Employee::getSalary)
+      .reduce(0.0, Double::sum);
+
+12. partitioningBy
+
+We can partition a stream into two – based on whether the elements satisfy certain criteria or not.
+
+ List<Integer> intList = Arrays.asList(2, 4, 5, 6, 8);
+    Map<Boolean, List<Integer>> isEven = intList.stream().collect(
+      Collectors.partitioningBy(i -> i % 2 == 0));
+
+13. groupingBy
+groupingBy() offers advanced partitioning – where we can partition the stream into more than just two groups.
+
+It takes a classification function as its parameter. This classification function is applied to each element of the stream.
+
+The value returned by the function is used as a key to the map that we get from the groupingBy collector:
+
+Map<Character, List<Employee>> groupByAlphabet = empList.stream().collect(
+      Collectors.groupingBy(e -> new Character(e.getName().charAt(0))));
+
+    assertEquals(groupByAlphabet.get('B').get(0).getName(), "Bill Gates");
+	
+	13.b Map<Character, List<Integer>> idGroupedByAlphabet = empList.stream().collect(
+      Collectors.groupingBy(e -> new Character(e.getName().charAt(0)),
+        Collectors.mapping(Employee::getId, Collectors.toList())));
+
+14. Java 8 Terminators
+
+Java-8 Stream terminal operations produces a non-stream, result such as primitive value, a collection or no value at all. 
+Terminal operations are typically preceded by intermediate operations which return another Stream which allows operations to be 
+connected in a form of a query.
+
+Here is the list of all Stream terminal operations:
+
+toArray()
+	Stream<String> cities = Stream.of("London", "Paris", "Tokyo"); 
+	String[] arrayOfCities = cities.toArray(String[]::new);
+	
+	Employee[] employees = empList.stream().toArray(Employee[]::new);
+
+
+collect()
+			List<String> listEmails = listPersons.stream()
+                .map(p -> p.getEmail())
+                .collect(Collectors.toList());
+				
+			Set<String> setEmails = listPersons.stream()
+                .map(p -> p.getEmail())
+                .collect(Collectors.toCollection(TreeSet::new));
+		
+			Map<Gender, List<Person>> byGender = listPersons.stream()
+				.collect(Collectors.groupingBy(p -> p.getGender()));
+			
+				
+count()
+reduce() - This method performs a reduction on the elements of the stream, using an associative accumulation function, 
+and returns an Optional object describing the reduced value. 
+	Optional<String> reducedValue = listPersons.stream()
+                    .map(p -> p.getFirstName())
+                    .reduce((name1, name2) -> name1 + ", " + name2);
+	Arrays.stream(numbers).reduce(0, (x, y) -> (x + y), Integer::sum);
+	
+	
+forEach()
+forEachOrdered()
+
+	List<Integer> list = Arrays.asList(2, 4, 6, 8, 10);
  
+	list.stream().parallel().forEach( System.out::println );        //1
  
- @Retention(RetentionPolicy.RUNTIME)
- @Target({ElementType.METHOD})
+	list.stream().parallel().forEachOrdered( System.out::println );
+
+	list.stream()
+        .sorted(Comparator.reverseOrder())
+        .forEachOrdered(System.out::println);
+
+min() - The min(comparator) is a special reduction operation that returns the minimum element in the stream according 
+to the provided comparator. It returns an Optional which is a container object that contains the value.
+
+	Optional<Person> min = listPersons.stream()
+            .filter(p -> p.getGender().equals(Gender.FEMALE))
+            .min((p1, p2) -> p1.getAge() - p2.getAge());
+			
+max()
+	Optional<Person> max = listPersons.stream()
+            .filter(p -> p.getGender().equals(Gender.MALE))
+            .max((p1, p2) -> p1.getAge() - p2.getAge());
+			
+anyMatch()
+allMatch()
+noneMatch()
+findAny()
+findFirst()
+
+	empList.stream().filter(emp->emp.getAccount().matches("Admin"))
+                        .findFirst()
+                        .ifPresent(System.out::println);
  
+        empList.stream().filter(emp->emp.getAccount().matches("Admin"))
+                        .findAny()
+                        .ifPresent(System.out::println);
+						
+			
+
+	
+	
+	
+15. Pipeline
+
+A stream pipeline consists of a stream source, followed by zero or more intermediate operations, and a terminal operation.
+
+Here’s a sample stream pipeline, where empList is the source, filter() is the intermediate operation and count is the terminal operation:
+
+Long empCount = empList.stream()
+      .filter(e -> e.getSalary() > 200000)
+      .count();
+
+
+16. Java Spliterator interface 
+is an internal iterator that breaks the stream into the smaller parts. 
+These smaller parts can be processed in parallel.
+
+The Java collection classes provide default stream() and parallelStream() methods which internally use the Spliterator 
+through the call to the spliterator(). It helps in processing the collection data in parallel.
+
+Collection.java
+default Stream<E> stream() {
+    return StreamSupport.stream(spliterator(), false);
+}
  
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+default Stream<E> parallelStream() {
+    return StreamSupport.stream(spliterator(), true);
+}
+Advantages of Spliterator
+Unlike Iterator and ListIterator, it supports Parallel Programming functionality.
+
+
+17. forEachRemaining()
+
+The forEachRemaining is a new method in the Iterator interface and helps to iterate through a Collection without an explicit 
+loop when an Iterator is used.
+
+when you use the forEachRemaining method, you no longer require a while loop in order to iterate through the input list via an Iterator.
+
+Iterator<Integer> itr = input.iterator();
+    itr.forEachRemaining(num -> System.out.println(num));
+
+
+18. removeIf
+
+employeeList.removeIf((Employee emp) -> emp.getAge() > = 30);
+
+
+
+
+
