@@ -581,6 +581,113 @@ Iterator<Integer> itr = input.iterator();
 employeeList.removeIf((Employee emp) -> emp.getAge() > = 30);
 
 
+Stream<String> stream = Files.lines(Paths.get(fileName))
+
+
+stream
+//					.filter(line -> !line.startsWith("line3"))
+//					.map(String::toUpperCase)
+//					.collect(Collectors.toList());
+
+
+			try (BufferedReader br = Files.newBufferedReader(Paths.get(fileName))) {
+
+				//br returns as stream and convert it into a List
+				list = br.lines().collect(Collectors.toList());
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		
+			list.forEach(System.out::println);
+			
+			Stream<Path> paths = Files.find( Paths.get("."), Integer.MAX_VALUE,
+				        (path,attrs) -> attrs.isRegularFile()
+				                && path.toString().endsWith(".txt"));
+			
+				
+				paths.limit(5).forEach(System.out::println);
+				
+
+
+
+
+
+
+
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+										Reflection
+	
+Java Reflection is a process of examining or modifying the run time behavior of a class at run time.
+
+
+						Multi Threading
+
+You can execute the business logic in Asynchrounous manner so that user intervention may not be needed..
+
+Multithreading is a Java feature that allows concurrent execution of two or more parts of a program
+
+Thread class
+
+	start() -> it will internally call the run method to excute the business logic in Asynchronously
+	setName()
+	
+Runnable interfaces
+Callable interface
+
+
+	Excercise
+	
+1. Create MailThread which accepts Employee Object
+
+2. run() method can call send mail method from employee object..
+NOte: write a sendMail method with some SysOuts...
+
+3. Create a MailThreadTest class and start the Mail Thread.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
